@@ -6,6 +6,7 @@ import cors from 'cors'
 import productrouter from './routes/product.routes';
 import { auth } from './middlewares/auth';
 import cartrouter from './routes/cart.router';
+import orderrouter from './routes/order.router';
 
 const app=express()
 
@@ -19,6 +20,8 @@ app.use("/user",userrouter)
 app.use("/product",productrouter)
 app.use(auth)
 app.use("/cart",cartrouter)
+app.use("/order",orderrouter)
+
 
 app.listen(4031,async ()=>{
     try {
