@@ -21,7 +21,7 @@ productrouter.post("/add",async (req:Request,res:Response)=>{
 
 productrouter.get("/get",async (req:Request,res:Response)=>{
     try {
-        const data:Product[]=await ProductModel.find()
+        const data:Product[]|[]=await ProductModel.find()
         return res.status(200).send(data)
 
     } catch (error:any) {

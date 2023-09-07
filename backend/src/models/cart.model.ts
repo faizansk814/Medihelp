@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 
 export interface Cart extends Document{
     userid:mongoose.Schema.Types.ObjectId,
