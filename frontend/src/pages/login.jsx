@@ -12,16 +12,19 @@ import {
     Heading,
     Text,
 } from '@chakra-ui/react';
+import { useNavigate } from "react-router-dom";
 
 function Login() {
     const [user, setuser] = useState({ email: "", password: "" })
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const handleClick = async (e) => {
         e.preventDefault()
         const res = await dispatch(LoginUser(user))
-        if(res.msg==="Login Successfull"){
+        if (res.msg === "Login successful") {
             alert(res.msg)
-        }else{
+            navigate("/")
+        } else {
             alert(res.msg)
         }
     }
@@ -35,12 +38,12 @@ function Login() {
 
                     <FormControl id="email">
                         <FormLabel>Email address</FormLabel>
-                        <Input type="email" placeholder="Enter your email" onChange={(e) => setuser({ ...user, email: e.target.value })} />
+                        <Input type="email" placeholder="Enter your email" onChange={(e) => setuser({ ...user, email: e.target.value })} value={user.email} />
                     </FormControl>
 
                     <FormControl id="password">
                         <FormLabel>Password</FormLabel>
-                        <Input type="password" placeholder="Enter your password" onChange={(e) => setuser({ ...user, password: e.target.value })} />
+                        <Input type="password" placeholder="Enter your password" onChange={(e) => setuser({ ...user, password: e.target.value })} value={user.password} />
                     </FormControl>
 
                     <Button type="submit" colorScheme="blue">

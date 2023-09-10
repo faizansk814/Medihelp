@@ -13,6 +13,7 @@ export const reducer = (state = intialState, action) => {
             return { ...state, isLoading: true, isError: false }
         case LOGIN_SUCCESS:
             localStorage.setItem("token", action.payload.token)
+            localStorage.setItem("user",JSON.stringify(action.payload.alreadyPresent))
             return { ...state, isLoading: false, isError: false, isAuth: true }
         case LOGIN_FAILURE:
             return { ...state, isLoading: false, isError: true, isAuth: false }
