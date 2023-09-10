@@ -1,4 +1,7 @@
 import {
+  CATEGORY_FAILURE,
+  CATEGORY_REQUEST,
+  CATEGORY_SUCCESS,
   PRODUCT_FAILURE,
   PRODUCT_REQUEST,
   PRODUCT_SUCCESS,
@@ -15,6 +18,7 @@ export const reducer = (state = intialState, action) => {
     case PRODUCT_REQUEST:
       return { ...state, isLoading: true, isError: false };
     case PRODUCT_SUCCESS:
+      localStorage.setItem("length",Math.ceil(35/6))
       return {
         ...state,
         isLoading: false,
@@ -23,6 +27,16 @@ export const reducer = (state = intialState, action) => {
       };
     case PRODUCT_FAILURE:
       return { ...state, isLoading: false, isError: true };
+    
+    case CATEGORY_REQUEST:
+      return {...state,isLoading:true,isError:false};
+    
+    case CATEGORY_SUCCESS:
+      localStorage.setItem("length",Math.ceil(action.payload.length/6))
+      return {...state,isLoading:false,data:action.payload,isError:false};
+
+    case CATEGORY_FAILURE:
+      return {...state,isLoading:false,isError:true}
     default:
       return state;
   }
