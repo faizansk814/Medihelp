@@ -14,26 +14,32 @@ import {
   RadioGroup,
   Divider,
   Checkbox,
+  Button,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect,useState } from "react";
-import { getProductData } from "../redux/userReducer/action";
+import { useEffect, useState } from "react";
+import { filter, getProductData } from "../redux/userReducer/action";
 import Navbar from "../components/navbar";
 
 function Dashboard() {
   const data = useSelector((store) => store.userReducer.data);
-  const [selectdata,setSelect]=useState("")
-  const handleChange=(value)=>{
-    setSelect(value)
-    
-
+  const length = parseInt(localStorage.getItem("length") || 0);
+  const buttonarry = [];
+  for (let i = 1; i <= length; i++) {
+    buttonarry.push(<button key={i}>{i}</button>);
   }
-  console.log(data);
+  const [selectdata, setSelect] = useState("");
+  const [page, setPage] = useState(1);
   const dispatch = useDispatch();
+  const handleChange = async (value) => {
+    setSelect(value);
+    dispatch(filter(value));
+  };
+  console.log(data);
   useEffect(() => {
-    dispatch(getProductData());
-  }, [dispatch]);
+    dispatch(getProductData(page));
+  }, [dispatch, page]);
   return (
     <Box mx={"auto"}>
       <Navbar />
@@ -207,64 +213,80 @@ function Dashboard() {
           </Box>
         </Box>
 
-        <Grid
-          templateColumns={{
-            base: "repeat(1, 1fr)",
-            md: "repeat(2, 1fr)",
-            lg: "repeat(3, 1fr)",
-          }}
-          gap={10}
-        >
-          {data.map((el, index) => (
-            <Box
-              key={index}
-              boxShadow="md"
-              borderWidth="1px"
-              borderRadius="lg"
-              overflow="hidden"
-              maxWidth="300px"
-              _hover={{ borderColor: "gray", cursor: "pointer" }}
-            >
-              <Box pos="relative">
-                <Center>
-                  <Image
-                    src={el.image}
-                    alt={el.name}
-                    w="100%"
-                    h="auto"
-                    boxSize="200px"
-                    objectFit="cover"
-                    pt={"2"}
-                  />
-                </Center>
+        <Box>
+          <Grid
+            templateColumns={{
+              base: "repeat(1, 1fr)",
+              md: "repeat(2, 1fr)",
+              lg: "repeat(3, 1fr)",
+            }}
+            gap={10}
+          >
+            {data.map((el, index) => (
+              <Box
+                key={index}
+                boxShadow="md"
+                borderWidth="1px"
+                borderRadius="lg"
+                overflow="hidden"
+                maxWidth="300px"
+                maxHeight="350px"
+                _hover={{ borderColor: "gray", cursor: "pointer" }}
+              >
+                <Box pos="relative">
+                  <Center>
+                    <Image
+                      src={el.image}
+                      alt={el.name}
+                      w="100%"
+                      h="auto"
+                      boxSize="200px"
+                      objectFit="cover"
+                      pt={"2"}
+                    />
+                  </Center>
+                </Box>
+                <Box p="4">
+                  <VStack spacing="1" alignItems="flex-start">
+                    <Heading as="h2" size="md" noOfLines={2}>
+                      {el.name}
+                    </Heading>
+                    <HStack justifyContent="space-between">
+                      <Box>
+                        <Text
+                          fontSize="sm"
+                          color="gray.500"
+                          textDecoration="line-through"
+                        >
+                          {((el.price * 100) / 48).toFixed(2)}
+                        </Text>
+                        <Text fontSize="lg" fontWeight="bold" color="teal.600">
+                          {el.price}
+                        </Text>
+                      </Box>
+                      <Badge fontSize={"18"} colorScheme="green">
+                        48% OFF
+                      </Badge>
+                    </HStack>
+                  </VStack>
+                </Box>
               </Box>
-              <Box p="4">
-                <VStack spacing="1" alignItems="flex-start">
-                  <Heading as="h2" size="md" noOfLines={2}>
-                    {el.name}
-                  </Heading>
-                  <HStack justifyContent="space-between">
-                    <Box>
-                      <Text
-                        fontSize="sm"
-                        color="gray.500"
-                        textDecoration="line-through"
-                      >
-                        {((el.price * 100) / 48).toFixed(2)}
-                      </Text>
-                      <Text fontSize="lg" fontWeight="bold" color="teal.600">
-                        {el.price}
-                      </Text>
-                    </Box>
-                    <Badge fontSize={"18"} colorScheme="green">
-                      48% OFF
-                    </Badge>
-                  </HStack>
-                </VStack>
-              </Box>
-            </Box>
-          ))}
-        </Grid>
+            ))}
+          </Grid>
+          <Box display={'flex'} justifyContent={'center'} mt={'10'} gap={'3'}>
+            {
+              // creating buttons using new Array Method
+
+              new Array(length).fill(0).map((ele, ind) => (
+                //  ind =0 , we have to start page no from 1 , thats why ind+1 = 1
+
+                <Button key={ind} onClick={() => setPage(ind + 1)}>
+                  {ind + 1}
+                </Button>
+              ))
+            }
+          </Box>
+        </Box>
       </Flex>
     </Box>
   );
