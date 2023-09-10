@@ -2,7 +2,6 @@ import { HStack, Flex, Box, Image, useDisclosure, VStack, IconButton, Collapse, 
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faUser, faUpload } from '@fortawesome/free-solid-svg-icons';
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 

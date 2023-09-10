@@ -5,6 +5,9 @@ import {
   CATEGORY_REQUEST,
   CATEGORY_SUCCESS,
   CATEGORY_FAILURE,
+  PARTICULAR_REQUEST,
+  PARTICULAR_SUCCESS,
+  PARTICULAR_FAILURE,
 } from "./actiontype";
 
 import axios from "axios";
@@ -22,16 +25,23 @@ export const getProductData = (page) => (dispatch) => {
     });
 };
 
-export const filter=(category)=>async (dispatch)=>{
-  dispatch({type:CATEGORY_REQUEST})
+export const filter = (category) => async (dispatch) => {
+  dispatch({ type: CATEGORY_REQUEST });
   try {
-    let res=await axios.get(`${url}/product/filter?category=${category}`)
-    dispatch({type:CATEGORY_SUCCESS,payload:res.data})
+    let res = await axios.get(`${url}/product/filter?category=${category}`);
+    dispatch({ type: CATEGORY_SUCCESS, payload: res.data });
   } catch (error) {
-    console.log(error)
-    dispatch({type:CATEGORY_FAILURE})
+    console.log(error);
+    dispatch({ type: CATEGORY_FAILURE });
   }
+};
 
-
-
+export const ParticularProduct=(id)=>async (dispatch)=>{
+  dispatch({type:PARTICULAR_REQUEST})
+  try {
+    const res=await axios.get(`${url}/product/part/${id}`)
+    dispatch({type:PARTICULAR_SUCCESS,payload:res.data})
+  } catch (error) {
+    dispatch({type:PARTICULAR_FAILURE})
+  }
 }

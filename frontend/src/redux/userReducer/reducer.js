@@ -2,6 +2,9 @@ import {
   CATEGORY_FAILURE,
   CATEGORY_REQUEST,
   CATEGORY_SUCCESS,
+  PARTICULAR_FAILURE,
+  PARTICULAR_REQUEST,
+  PARTICULAR_SUCCESS,
   PRODUCT_FAILURE,
   PRODUCT_REQUEST,
   PRODUCT_SUCCESS,
@@ -11,6 +14,7 @@ const intialState = {
   data: [],
   isError: false,
   isLoading: false,
+  product:{}
 };
 
 export const reducer = (state = intialState, action) => {
@@ -36,6 +40,12 @@ export const reducer = (state = intialState, action) => {
       return {...state,isLoading:false,data:action.payload,isError:false};
 
     case CATEGORY_FAILURE:
+      return {...state,isLoading:false,isError:true}
+    case PARTICULAR_REQUEST:
+      return {...state,isLoading:true,isError:false}
+    case PARTICULAR_SUCCESS:
+      return {...state,isLoading:false,product:action.payload}
+    case PARTICULAR_FAILURE:
       return {...state,isLoading:false,isError:true}
     default:
       return state;
