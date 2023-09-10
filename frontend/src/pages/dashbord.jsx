@@ -21,8 +21,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { filter, getProductData } from "../redux/userReducer/action";
 import Navbar from "../components/navbar";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
+  const navigate=useNavigate()
   const data = useSelector((store) => store.userReducer.data);
   const length = parseInt(localStorage.getItem("length") || 0);
   const buttonarry = [];
@@ -232,6 +234,7 @@ function Dashboard() {
                 maxWidth="300px"
                 maxHeight="350px"
                 _hover={{ borderColor: "gray", cursor: "pointer" }}
+                onClick={()=>{navigate(`/product/${el._id}`)}}
               >
                 <Box pos="relative">
                   <Center>
