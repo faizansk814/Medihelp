@@ -8,6 +8,18 @@ import {
   PARTICULAR_REQUEST,
   PARTICULAR_SUCCESS,
   PARTICULAR_FAILURE,
+  ADD_CART_REQUEST,
+  ADD_CART_SUCCESS,
+  ADD_CART_FAILURE,
+  CART_REQUEST,
+  CART_SUCCESS,
+  CART_FAILURE,
+  INC_REQUEST,
+  INC_SUCCESS,
+  INC_FAILURE,
+  DEC_REQUEST,
+  DEC_SUCCESS,
+  DEC_FAILURE,
 } from "./actiontype";
 
 import axios from "axios";
@@ -36,12 +48,74 @@ export const filter = (category) => async (dispatch) => {
   }
 };
 
-export const ParticularProduct=(id)=>async (dispatch)=>{
-  dispatch({type:PARTICULAR_REQUEST})
+export const ParticularProduct = (id) => async (dispatch) => {
+  dispatch({ type: PARTICULAR_REQUEST });
   try {
-    const res=await axios.get(`${url}/product/part/${id}`)
-    dispatch({type:PARTICULAR_SUCCESS,payload:res.data})
+    const res = await axios.get(`${url}/product/part/${id}`);
+    dispatch({ type: PARTICULAR_SUCCESS, payload: res.data });
   } catch (error) {
-    dispatch({type:PARTICULAR_FAILURE})
+    dispatch({ type: PARTICULAR_FAILURE });
   }
-}
+};
+
+export const AddToCart = (id, token) => async (dispatch) => {
+  dispatch({ type: ADD_CART_REQUEST });
+  try {
+    const res = await axios.post(`${url}/cart/add/${id}`, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({ type: ADD_CART_SUCCESS });
+    return res.data;
+  } catch (error) {
+    dispatch({ type: ADD_CART_FAILURE });
+    return error.response.data;
+  }
+};
+
+export const CartGet = (token) => async (dispatch) => {
+  dispatch({ type: CART_REQUEST });
+  try {
+    const res = await axios.get(`${url}/cart/get`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({ type: CART_SUCCESS, payload: res.data });
+  } catch (error) {
+    dispatch({ type: CART_FAILURE });
+  }
+};
+
+export const Incr = (token, id) => async (dispatch) => {
+  dispatch({ type: INC_REQUEST });
+  try {
+    const res = await axios.patch(`${url}/cart/inc/${id}`, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({ type: INC_SUCCESS });
+    return res.data;
+  } catch (error) {
+    dispatch({ type: INC_FAILURE });
+    return error.response.data
+  }
+};
+
+export const Dec = (token, id) => async (dispatch) => {
+  dispatch({ type: DEC_REQUEST });
+  try {
+    const res = await axios.patch(`${url}/cart/dec/${id}`, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({ type: DEC_SUCCESS });
+    return res.data;
+  } catch (error) {
+    dispatch({ type: DEC_FAILURE });
+    return error.response.data
+  }
+};

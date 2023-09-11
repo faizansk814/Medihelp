@@ -11,6 +11,7 @@ const product_routes_1 = __importDefault(require("./routes/product.routes"));
 const auth_1 = require("./middlewares/auth");
 const cart_router_1 = __importDefault(require("./routes/cart.router"));
 const order_router_1 = __importDefault(require("./routes/order.router"));
+const payment_router_1 = __importDefault(require("./routes/payment.router"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
@@ -22,6 +23,7 @@ app.use("/product", product_routes_1.default);
 app.use(auth_1.auth);
 app.use("/cart", cart_router_1.default);
 app.use("/order", order_router_1.default);
+app.use("/payment", payment_router_1.default);
 app.listen(4031, async () => {
     try {
         await db_1.connection;

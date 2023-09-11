@@ -7,6 +7,7 @@ import productrouter from './routes/product.routes';
 import { auth } from './middlewares/auth';
 import cartrouter from './routes/cart.router';
 import orderrouter from './routes/order.router';
+import paymentrouter from './routes/payment.router';
 
 const app=express()
 
@@ -18,6 +19,7 @@ app.get("/",(req:Request,res:Response)=>{
 
 app.use("/user",userrouter)
 app.use("/product",productrouter)
+app.use("/payment",paymentrouter)
 app.use(auth)
 app.use("/cart",cartrouter)
 app.use("/order",orderrouter)

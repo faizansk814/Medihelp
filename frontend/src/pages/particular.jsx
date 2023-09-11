@@ -3,7 +3,7 @@ import { Box, Image, Text, Button, VStack, HStack } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { ParticularProduct } from "../redux/userReducer/action";
+import { AddToCart, ParticularProduct } from "../redux/userReducer/action";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Navbar from "../components/navbar";
@@ -11,8 +11,17 @@ import Navbar from "../components/navbar";
 function Particular() {
   const { productid } = useParams();
   console.log(productid);
+  const token=localStorage.getItem("token")||""
   const product = useSelector((store) => store.userReducer.product);
   console.log(product);
+  const handleClick=async ()=>{
+    const res=await dispatch(AddToCart(productid,token))
+    if(res.msg==="product added to cart"){
+      alert(res.msg)
+    }else{
+      alert(res.msg)
+    }
+  }
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(ParticularProduct(productid));
@@ -69,7 +78,7 @@ function Particular() {
           </Text>
 
           {/* Add to Cart Button */}
-          <Button colorScheme="blue" variant="solid" size="lg" w="100%">
+          <Button colorScheme="blue" variant="solid" size="lg" w="100%" onClick={handleClick}>
             <FontAwesomeIcon
               icon={faShoppingCart}
               style={{ marginRight: "10px" }}
