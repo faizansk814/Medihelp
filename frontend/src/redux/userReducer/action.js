@@ -20,6 +20,9 @@ import {
   DEC_REQUEST,
   DEC_SUCCESS,
   DEC_FAILURE,
+  DELETE_REQUEST,
+  DELETE_SUCCESS,
+  DELETE_FAILURE,
 } from "./actiontype";
 
 import axios from "axios";
@@ -116,6 +119,22 @@ export const Dec = (token, id) => async (dispatch) => {
     return res.data;
   } catch (error) {
     dispatch({ type: DEC_FAILURE });
+    return error.response.data
+  }
+};
+
+export const Delete = (token, id) => async (dispatch) => {
+  dispatch({ type: DELETE_REQUEST });
+  try {
+    const res = await axios.delete(`${url}/cart/delete/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({ type: DELETE_SUCCESS });
+    return res.data;
+  } catch (error) {
+    dispatch({ type: DELETE_FAILURE });
     return error.response.data
   }
 };
