@@ -62,9 +62,13 @@ export default function Navbar() {
         <Box display={{ base: "none", md: "block" }}>
           <HStack spacing={"4"}>
             <FontAwesomeIcon icon={faShoppingCart} />
-            <Link to={'/cart'} fontSize={"xl"}><Text fontSize={"xl"}>Cart</Text></Link>
+            <Link to={"/cart"} fontSize={"xl"}>
+              <Text fontSize={"xl"}>Cart</Text>
+            </Link>
             <FontAwesomeIcon icon={faUpload} />
-            <Link to={'/'} fontSize={"xl"}><Text fontSize={"xl"}>Uploads</Text></Link>
+            <Link to={"/"} fontSize={"xl"}>
+              <Text fontSize={"xl"}>Uploads</Text>
+            </Link>
             {token ? (
               <Flex align={"center"}>
                 <Text fontSize={"xl"}>{user.username}</Text>
@@ -100,6 +104,20 @@ export default function Navbar() {
           <a href="/cart">cart</a>
           <a href="/services">Services</a>
           <a href="/contact">Contact</a>
+          {token ? (
+            <Button ml={"2"} onClick={handleLogout}>
+              Logout
+            </Button>
+          ) : (
+            <Button
+              ml={"2"}
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Signin/Signup
+            </Button>
+          )}
         </VStack>
       </Collapse>
       <Box
