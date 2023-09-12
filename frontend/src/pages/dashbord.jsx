@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import { filter, getProductData } from "../redux/userReducer/action";
 import Navbar from "../components/navbar";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/footer";
 
 function Dashboard() {
   const navigate=useNavigate()
@@ -291,6 +292,8 @@ function Dashboard() {
           </Box>
         </Box>
       </Flex>
+      <Divider my={"6"} borderColor="gray.300" borderWidth="4px" />
+      <Footer/>
     </Box>
   );
 }

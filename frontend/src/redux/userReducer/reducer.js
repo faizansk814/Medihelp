@@ -11,6 +11,9 @@ import {
   DEC_FAILURE,
   DEC_REQUEST,
   DEC_SUCCESS,
+  DELETE_FAILURE,
+  DELETE_REQUEST,
+  DELETE_SUCCESS,
   INC_FAILURE,
   INC_REQUEST,
   INC_SUCCESS,
@@ -80,7 +83,7 @@ export const reducer = (state = intialState, action) => {
     case CART_FAILURE:
       return { ...state, isLoading: false, isError: true };
     case INC_REQUEST:
-      return { ...state, isLoading: true, isError: false };
+      return { ...state };
     case INC_SUCCESS:
       return { ...state, isLoading: false, isError: false };
     case INC_FAILURE:
@@ -91,6 +94,12 @@ export const reducer = (state = intialState, action) => {
       return { ...state, isLoading: false, isError: false };
     case DEC_FAILURE:
       return { ...state, isLoading: false, isError: true };
+    case DELETE_REQUEST:
+      return { ...state };
+    case DELETE_SUCCESS:
+      return { ...state, isLoading: false, isError: false };
+    case DELETE_FAILURE:
+      return { ...state, isError: true };
     default:
       return state;
   }
